@@ -1,0 +1,2 @@
+ALTER TABLE "students" ADD COLUMN "admin_id" integer NOT NULL;--> statement-breakpoint
+ALTER TABLE "students" ADD CONSTRAINT "students_admin_id_admin_admin_id_fkey" FOREIGN KEY ("admin_id") REFERENCES "admin"("admin_id");

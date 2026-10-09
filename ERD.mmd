@@ -1,0 +1,33 @@
+erDiagram
+    STUDENTS {
+        int student_id PK "PRIMARY KEY"
+        varchar(15) refid_uid UK "UNIQUE NOT NULL"
+        varchar(50) first_name "NOT NULL"
+        varchar(50) last_name "NOT NULL"
+        varchar(20) university_id UK "UNIQUE NOT NULL"
+        varchar(255) university_email UK "UNIQUE NOT NULL"
+        varchar(20) phone_number "NULLABLE"
+        varchar(255) profile_picture "NULLABLE"
+        timestamptz created_at "NOT NULL"
+    }
+
+    ADMIN {
+        int admin_id PK "PRIMARY KEY"
+        varchar(15) refid_uid UK "UNIQUE NOT NULL"
+        varchar(50) first_name "NOT NULL"
+        varchar(50) last_name "NOT NULL"
+        varchar(255) university_email UK "UNIQUE NOT NULL"
+        varchar(20) phone_number "NULLABLE"
+        varchar(255) profile_picture_url "NULLABLE"
+        timestamptz created_at "NOT NULL"
+    }
+
+    DAILY_LOGS {
+        int log_id PK "PRIMARY KEY"
+        int student_id FK "NOT NULL, REFERENCES STUDENTS(student_id)"
+        timestamptz time_in "NOT NULL"
+        timestamptz time_out "NULLABLE"
+    }
+
+    ADMIN ||--o{ STUDENTS : "manages"
+    STUDENTS ||--o{ DAILY_LOGS : "punches in/out"

@@ -1,6 +1,14 @@
 import { defineRelations } from "drizzle-orm";
-import * as schema from "./schema.ts";
+import * as schema from "../schema/index.ts";
 
-// Add relations here once tables reference each other, e.g.
-// defineRelations(schema, (r) => ({ users: { posts: r.many.posts() } }))
-export const relations = defineRelations(schema);
+export const relations = defineRelations(schema, (r) => ({
+  students: {
+    dailyLogs: r.many.dailyLogs(),
+  },
+  dailyLogs: {
+    student: r.one.students({
+      from: r.dailyLogs.studentId,
+      to: r.students.studentId,
+    }),
+  },
+}));

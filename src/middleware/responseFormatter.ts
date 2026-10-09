@@ -19,7 +19,7 @@ function responseFormatter(_req: Request, res: Response, next: NextFunction) {
         res.statusCode >= 200 && res.statusCode < 300 ? "success" : "error",
       statusCode: res.statusCode,
       error: safeValue.error,
-      message: data.message ?? "",
+      message: safeValue.message ?? "",
       data: safeValue.data ?? {},
     });
   };
