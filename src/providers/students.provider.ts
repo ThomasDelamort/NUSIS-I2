@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../lib/db.ts";
+import { startOfCampusDay } from "../lib/campusTime.ts";
 import { students } from "../schema/students.schema.ts";
 import type { NewStudent, Student } from "../schema/students.schema.ts";
 
@@ -35,16 +36,6 @@ export const getStudents = async (): Promise<Student[] | void> => {
     console.error("Error fetching students:", err);
     throw err;
   }
-};
-
-// The campus runs on Philippine time, so "today" must not depend on the server's timezone.
-const CAMPUS_TIME_ZONE = "Asia/Manila";
-const CAMPUS_UTC_OFFSET = "+08:00"; // The Philippines has no daylight saving time.
-
-const startOfCampusDay = (now = new Date()): Date => {
-  // en-CA formats dates as YYYY-MM-DD.
-  const today = new Intl.DateTimeFormat("en-CA", { timeZone: CAMPUS_TIME_ZONE }).format(now);
-  return new Date(`${today}T00:00:00${CAMPUS_UTC_OFFSET}`);
 };
 
 /** The student registered to a card, with today's daily logs (oldest first). */

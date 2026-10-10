@@ -56,6 +56,14 @@ Content-Type: image/jpeg
 < ./profile.jpg
 --NusisBoundary--
 
+### Card tap: the first tap of a visit records Time In, the next records Time Out
+POST {{baseURL}}/api/daily-logs/tap
+Content-Type: application/json
+
+{
+    "rfidUid": "3906277695"
+}
+
 ### PUT Requests
 # Replaces a student's profile picture (the old file is deleted from S3)
 PUT {{baseURL}}/api/students/2/profile-picture

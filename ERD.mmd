@@ -24,10 +24,10 @@ erDiagram
     }
 
     DAILY_LOGS {
-        int log_id PK "PRIMARY KEY"
-        int student_id FK "NOT NULL, REFERENCES STUDENTS(student_id)"
-        timestamptz time_in "NOT NULL"
-        timestamptz time_out "NULLABLE"
+        int LogId PK "PRIMARY KEY"
+        int StudentId FK "NOT NULL, REFERENCES STUDENTS(StudentId) ON DELETE CASCADE"
+        timestamptz TimeIn "NOT NULL"
+        timestamptz TimeOut "NULLABLE"
     }
 
     ADMIN ||--o{ STUDENTS : "manages"

@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import cors from "cors";
 import express from "express";
 import type { Express } from "express";
 import type { Request, Response } from "express";
@@ -7,14 +8,18 @@ import { pool } from "./lib/db.ts";
 
 // ROUTES
 import studentRoutes from "../src/routes/student.route.ts";
+import dailyLogRoutes from "./routes/daily_logs.route.ts";
 
 dotenv.config();
 
 const app: Express = express();
 const PORT: string | number = 3000;
 
+// Comma-separated list of origins allowed to call the API from a browser; unset allows any origin.
+const corsOrigins = process.env["CORS_ORIGIN"]?.split(",").map((origin) => origin.trim()).filter(Boolean);
 
 // Middlewares
+app.use(cors({ origin: corsOrigins?.length ? corsOrigins : true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(responseFormatter);
@@ -33,6 +38,7 @@ app.get("/health-checks", async (_req: Request, res: Response) => {
 });
 
 app.use("/api", studentRoutes);
+app.use("/api", dailyLogRoutes);
 
 // Fail fast if the database can't be reached instead of serving broken requests.
 try {
