@@ -4,6 +4,7 @@ import express from "express";
 import type { Express } from "express";
 import type { Request, Response } from "express";
 import responseFormatter from "./middleware/responseFormatter.ts";
+import { apiRateLimit } from "./middleware/rateLimit.middleware.ts";
 import { pool } from "./lib/db.ts";
 
 // ROUTES
@@ -17,6 +18,11 @@ const PORT: string | number = 3000;
 
 // Comma-separated list of origins allowed to call the API from a browser; unset allows any origin.
 const corsOrigins = process.env["CORS_ORIGIN"]?.split(",").map((origin) => origin.trim()).filter(Boolean);
+
+// Behind a reverse proxy (e.g. a hosting platform), every request arrives from the proxy's IP,
+// so the rate limiter needs to read the client IP from X-Forwarded-For instead.
+const trustedProxyHops = Number(process.env["TRUST_PROXY"] ?? 0);
+if (trustedProxyHops > 0) app.set("trust proxy", trustedProxyHops);
 
 // Middlewares
 app.use(cors({ origin: corsOrigins?.length ? corsOrigins : true }));
@@ -37,6 +43,8 @@ app.get("/health-checks", async (_req: Request, res: Response) => {
   }
 });
 
+// Health checks stay unlimited so uptime monitors never see a 429.
+app.use("/api", apiRateLimit);
 app.use("/api", studentRoutes);
 app.use("/api", dailyLogRoutes);
 
