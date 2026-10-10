@@ -13,9 +13,14 @@ export const createStudent = async (student: NewStudent): Promise<Student> => {
   }
 };
 
-export const getStudentByRfid = async (rfid: string): Promise<Student | null> => {
+export const getStudentByRfid = async (
+  rfid: string,
+): Promise<Student | null> => {
   try {
-    const [student] = await db.select().from(students).where(eq(students.refidUid, rfid));
+    const [student] = await db
+      .select()
+      .from(students)
+      .where(eq(students.rfidUid, rfid));
     return student ?? null;
   } catch (err: any) {
     console.error("Error fetching student by RFID:", err);

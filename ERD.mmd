@@ -1,14 +1,15 @@
 erDiagram
     STUDENTS {
-        int student_id PK "PRIMARY KEY"
-        varchar(15) refid_uid UK "UNIQUE NOT NULL"
-        varchar(50) first_name "NOT NULL"
-        varchar(50) last_name "NOT NULL"
-        varchar(20) university_id UK "UNIQUE NOT NULL"
-        varchar(255) university_email UK "UNIQUE NOT NULL"
-        varchar(20) phone_number "NULLABLE"
-        varchar(255) profile_picture "NULLABLE"
-        timestamptz created_at "NOT NULL"
+        int StudentId PK "PRIMARY KEY"
+        varchar(15) RfidUid UK "UNIQUE NOT NULL"
+        varchar(50) FirstName "NOT NULL"
+        varchar(50) LastName "NOT NULL"
+        varchar(20) UniversityId UK "UNIQUE NOT NULL"
+        varchar(255) UniversityEmail UK "UNIQUE NOT NULL"
+        varchar(20) ContactNumber "NULLABLE"
+        varchar(255) ProfilePicture "NULLABLE"
+        varchar(20) EmergencyContactNumber "NULLABLE"
+        timestamptz CreatedAt "NOT NULL"
     }
 
     ADMIN {
