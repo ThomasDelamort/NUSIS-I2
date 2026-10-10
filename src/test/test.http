@@ -24,3 +24,46 @@ Content-Type: application/json
     "profilePicture": null,
     "emergencyContactNumber": null
 }
+
+### POST with a profile picture (multipart). Uploaded to S3 under nusis/
+POST {{baseURL}}/api/students
+Content-Type: multipart/form-data; boundary=NusisBoundary
+
+--NusisBoundary
+Content-Disposition: form-data; name="rfidUid"
+
+1234567890
+--NusisBoundary
+Content-Disposition: form-data; name="firstName"
+
+Juan
+--NusisBoundary
+Content-Disposition: form-data; name="lastName"
+
+Dela Cruz
+--NusisBoundary
+Content-Disposition: form-data; name="universityId"
+
+2025-0000001
+--NusisBoundary
+Content-Disposition: form-data; name="universityEmail"
+
+delacruzj@students.nu-cebu.edu.ph
+--NusisBoundary
+Content-Disposition: form-data; name="profilePicture"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./profile.jpg
+--NusisBoundary--
+
+### PUT Requests
+# Replaces a student's profile picture (the old file is deleted from S3)
+PUT {{baseURL}}/api/students/2/profile-picture
+Content-Type: multipart/form-data; boundary=NusisBoundary
+
+--NusisBoundary
+Content-Disposition: form-data; name="profilePicture"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./profile.jpg
+--NusisBoundary--

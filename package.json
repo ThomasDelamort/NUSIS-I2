@@ -18,16 +18,21 @@
   "keywords": [],
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1149.0",
     "cors": "^2.8.6",
     "dotenv": "^18.0.6",
     "drizzle-orm": "^1.0.0-rc.4",
     "express": "^5.2.1",
     "http-status-codes": "^2.3.0",
+    "multer": "^2.4.0",
+    "multer-s3": "^3.0.1",
     "pg": "^8.23.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/multer": "^2.3.0",
+    "@types/multer-s3": "^3.0.3",
     "@types/node": "^26.6.4",
     "@types/pg": "^8.23.1",
     "drizzle-kit": "^1.0.0-rc.4",
@@ -35,5 +40,9 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "nodemon@1.19.4": true,
+    "esbuild@0.28.2": true
   }
 }
